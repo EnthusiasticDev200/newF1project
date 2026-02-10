@@ -28,9 +28,22 @@ table 50100 "TS Race Event"
         }
         field(6; Status; Enum "TS Race Status")
         {
-            Caption = ' Status';
+            Caption = 'Status';
+            Editable = false;
         }
-        field(7; "No. Series"; Code[20])
+        field(7; "Is Past Scheduled"; Boolean)
+        {
+            Caption = 'IsPast';
+            Editable = false;
+            // make not visible
+        }
+        field(8; "Past Scheduled At"; DateTime)
+        {
+            Caption = 'Past Scheduled At';
+            Editable = false;
+            // make not visible
+        }
+        field(9; "No. Series"; Code[20])
         {
             Caption = ' No. Series';
             TableRelation = "No. Series";
