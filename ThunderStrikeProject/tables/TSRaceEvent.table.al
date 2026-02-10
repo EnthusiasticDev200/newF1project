@@ -7,7 +7,8 @@ table 50100 "TS Race Event"
     {
         field(1;"Race No."; Code[20])
         {
-            Caption = 'Race No.';            
+            Caption = 'Race No.';
+            Editable = false;            
         }
         field(2;Name; Text[20])
         {
@@ -29,6 +30,11 @@ table 50100 "TS Race Event"
         {
             Caption = ' Status';
         }
+        field(7; "No. Series"; Code[20])
+        {
+            Caption = ' No. Series';
+            TableRelation = "No. Series";
+        }
     }
     
     keys
@@ -45,11 +51,19 @@ table 50100 "TS Race Event"
     }
     
     var
-        myInt: Integer;
+        SalesSetup : Record "Sales & Receivables Setup";
+        NoSeriesMgt : Codeunit "No. Series";
     
     trigger OnInsert()
     begin
-        
+        if "Race No." = '' then begin
+            SalesSetup.Get();
+            if NoSeriesMgt.AreRelated(SalesSetUp.Race, xRec."No. Series") then
+                "No. Series" := xRec."No. Series"
+            else
+            "No. Series" := SalesSetUp.Race;
+            "Race No." := NoSeriesMgt.GetNextNo("No. Series", WorkDate());
+        end;
     end;
     
     trigger OnModify()
